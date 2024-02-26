@@ -7,7 +7,7 @@
  * const data = await fetchJson('https://api-url.com/endpoint/')
  * @example <caption>fetchJson as oneliner using the then() structure.</caption>
  * fetchJson('https://api-url.com/endpoint/').then((data)=>{
- *  // use data...
+ *  // use data... 
  * })
  * @param {string} url the api endpoint to address
  * @param {object} [payload] the payload to send to the API

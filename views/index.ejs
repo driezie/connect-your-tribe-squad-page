@@ -1,10 +1,108 @@
 <%- include('./partials/head') %>
+<section>
+  <h1>Meet the squad 1F</h1>
+  <div class="filters">
+    <div class="selector">
+      <p>Filter by:</p>
+      <select class="filter">
+        <option value="none" disabled>Filter</option>
+        <option value="all">All</option>
+        <option value="name">Name</option>
+        <option value="surname">Surname</option>
+      </select>
+    </div>
+    
 
-<h2>Students</h2>
-<ul>
-  <% persons.forEach(person => { %>
-    <li><a href="./person/<%= person.id %>"><%= person.name %></a>, squad_id <%= person.squad_id %></li>
-  <% }) %>
-</ul>
+    <div class="selector">
+      <p>Sort by:</p>
+      <select class="sort">
+        <option value="none" disabled>Sorteren</option>
+        <option value="name" selected>Teachers</option>
+        <option value="surname">Students</option>
+      </select>
+    </div>
+    
+  </div>
+
+  
+</section>
+<section>
+  <h3>Teachers</h3>
+  <grid>
+    <% data.forEach(person => { %>
+      <% if (person.role.includes('co_teacher') || person.role.includes('squad_leader') || person.role.includes('tribe_leader')) { %>
+        <div class="item teacher">
+          <a class="name" href="https://github.com/<%= person.github_handle %>"><%= person.name %> <%= person.prefix %> <%= person.surname %></a>
+          <ul class="roles">
+            <% person.role.forEach(role => { %>
+              <li><%= role %></li>
+            <% }) %>
+          </ul>
+          <article class="bio">
+            <p>
+              <% if (person.bio) {
+                  %><%= person.bio %><%
+                } else {
+                  %>Er is geen beschrijving beschikbaar van <%= person.name %>.<%
+                }
+                %></p>
+          </article>
+        </div>
+      <% } %>
+    <% }) %>
+  </grid>
+  
+    
+    
+  <h3>Students</h3>
+
+  <grid>
+    <% data.forEach(person => { %>
+      <% if (person.role.includes('member')) { %>
+        <div class="item students">
+          <a class="name" href="https://github.com/<%= person.github_handle %>"><%= person.name %> <%= person.prefix %> <%= person.surname %></a>          <ul class="roles">
+            <% person.role.forEach(role => { %>
+              <li><%= role %></li>
+            <% }) %>
+          </ul>
+          <article class="bio">
+            <p>
+              <% if (person.bio) {
+                  %><%= person.bio %><%
+                } else {
+                  %>Er is geen beschrijving beschikbaar van <%= person.name %>.<%
+                }
+                %></p>
+          </article>
+          <a class="websiteLink" href="">
+            <img src="/img/website.png" alt="website">              
+          </a>
+        </div>
+
+        
+
+      <% } %>
+    <% }) %>
+  </grid>
+  
+
+
+    
+    
+</section>
+
+<footer>
+  <section>
+    <form action="/" method="POST" >
+      <h2>Bewerk je eigen foto</h2>
+      <input type="file" name="file" id="file" accept="image/*">
+      <input type="submit" value="Verstuur">
+    </form>
+  </section>
+  
+</footer>
+
+<script src="/script.js"></script>
+<script src="/filter.js"></script>
 
 <%- include('./partials/foot') %>
