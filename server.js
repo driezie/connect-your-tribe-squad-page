@@ -23,7 +23,7 @@ app.use(express.static('public'))
 // Maak een GET route voor de index
 app.get('/', function (request, response) {
   // Haal alle personen uit de FDND API op
-  fetchJson(apiUrl + '/person/?filter={"squad_id":5}').then((data) => {
+  fetchJson(apiUrl + '/person/').then((data) => {
     console.log(data)
     // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
     response.render('index', data)
