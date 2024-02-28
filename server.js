@@ -1,58 +1,86 @@
 // Importeer het npm pakket express uit de node_modules map
-import express from 'express'
+import express from "express";
 // Importeer de zelfgemaakte functie fetchJson uit de ./helpers map
-import fetchJson from './helpers/fetch-json.js'
+import fetchJson from "./helpers/fetch-json.js";
 
 // Stel het basis endpoint in
-const apiUrl = 'https://fdnd.directus.app/items'
+const apiUrl = "https://fdnd.directus.app/items";
 
 // Haal alle squads uit de WHOIS API op
-const squadData = await fetchJson(apiUrl + '/person/?filter={"squad_id"}:5')
+const squadData = await fetchJson(apiUrl + '/person/?filter={"squad_id"}:5');
 
 // Maak een nieuwe express app aan
-const app = express()
+const app = express();
 
 // Stel ejs in als template engine
-app.set('view engine', 'ejs')
+app.set("view engine", "ejs");
 // Stel de map met ejs templates in
-app.set('views', './views')
+app.set("views", "./views");
 
 // Gebruik de map 'public' voor statische resources
-app.use(express.static('public'))
+app.use(express.static("public"));
 
 // Maak een GET route voor de index
-app.get('/', function (request, response) {
-  // Haal alle personen uit de FDND API op
-  fetchJson(apiUrl + '/person/').then((data) => {
-    console.log(data)
-    // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
-    response.render('index', data)
-  })
-})
+app.get("/", function (request, response) {
+  var selectedSquad = null;
 
+  // Haal alle personen uit de FDND API op
+  fetchJson(apiUrl + "/person/").then((data) => {
+    // Check of er een query in de URL staat (filter)
+    if (request.query.filter && request.query.filter != "all") {
+      // Filter de data op de meegegeven query
+      data.data = data.data.filter(
+        (person) => person.squad_id == request.query.filter
+      );
+    }
+
+    // Geef mee aan de pagina welke squad geselcteerd is voor filteren
+    switch (request.query.filter) {
+      case "":
+        selectedSquad = null;
+        break;
+      case "all":
+        selectedSquad = null;
+        break;
+      case "3":
+        selectedSquad = "D";
+        break;
+      case "4":
+        selectedSquad = "E";
+        break;
+      case "5":
+        selectedSquad = "F";
+        break;
+    }
+
+    console.log(data);
+    // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
+    response.render("index", { persons: data.data, currentSquad: selectedSquad });
+  });
+});
 
 // Maak een POST route voor de index
-app.post('/', function (request, response) {
+app.post("/", function (request, response) {
   // Er is nog geen afhandeling van POST, redirect naar GET op /
-  response.redirect(303, '/')
-})
+  response.redirect(303, "/");
+});
 
 // Maak een GET route voor person met een request parameter id
-app.get('/person/:id', function (request, response) {
+app.get("/person/:id", function (request, response) {
   // Gebruik de request parameter id en haal de juiste persoon uit de FDND API op
-  fetchJson(apiUrl + '/person/' + request.params.id).then((data) => {
-    https://fdnd.directus.app/items/person/46
+  fetchJson(apiUrl + "/person/" + request.params.id).then((data) => {
+    //fdnd.directus.app/items/person/46
     // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
-    response.render('person', data)
-    console.log(data)
-  })
-})
+    https: response.render("person", data);
+    console.log(data);
+  });
+});
 
 // Stel het poortnummer in waar express op moet gaan luisteren
-app.set('port', process.env.PORT || 8000)
+app.set("port", process.env.PORT || 8080);
 
 // Start express op, haal daarbij het zojuist ingestelde poortnummer op
-app.listen(app.get('port'), function () {
+app.listen(app.get("port"), function () {
   // Toon een bericht in de console en geef het poortnummer door
-  console.log(`Application started on http://localhost:${app.get('port')}`)
-})
+  console.log(`Application started on http://localhost:${app.get("port")}`);
+});
