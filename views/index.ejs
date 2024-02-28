@@ -3,8 +3,8 @@
   <h1>Meet the squad 1F</h1>
   <div class="filters">
     <div class="selector">
-      <p>Sort by:</p>
-      <select class="filter">
+      <label for="sort">Sort by:</label>
+      <select name="sort">
         <option value="none" disabled>Sorteer</option>
         <option value="all">All</option>
         <option value="name">Name</option>
@@ -13,17 +13,17 @@
     </div>
     
 
-    <div class="selector">
-      <p>Filter by:</p>
-      <select class="sort">
+    <form class="selector">
+      <label for="filter">Filter by:</label>
+      <select name="filter">
         <option value="none" disabled>Filter</option>
         <option value="/" >Alle squads</option>
         <option value="/" >Squad D</option>
         <option value="/" >Squad E</option>
         <option value="/" >Squad F</option>
       </select>
-    </div>
-    
+      <button type="submit">></button>
+    </form>
   </div>
 
   
