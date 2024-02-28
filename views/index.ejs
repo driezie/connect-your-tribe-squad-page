@@ -1,7 +1,7 @@
 <%- include('./partials/head') %>
 <header>
   <h1>
-    Meet the <%= (currentSquad == null) ? "Squads" : "Squad " + currentSquad %>
+    Meet the <%= (filters.selectedSquad == null) ? "Squads" : "Squad " + filters.selectedSquad %>
   </h1>
 
   <div class="filters">
@@ -35,7 +35,11 @@
 </header>
 <section>
   <h3>
-    <%= (currentSquad == null) ? "All squads" : "Squad " + currentSquad %>
+    <% if (filters.search) { %>
+      Search results for "<%= filters.search %>" in <%= (filters.selectedSquad == null) ? "all Squads" : "Squad " + filters.selectedSquad %>
+    <% } else { %>
+      <%= (filters.selectedSquad == null) ? "All squads" : "Squad " + filters.selectedSquad %>
+    <% } %>
   </h3>
   <grid class="default">
     <% persons.forEach(person => { %>

@@ -26,7 +26,7 @@ app.get("/", function (request, response) {
 
   // Haal alle personen uit de FDND API op
   fetchJson(apiUrl + "/person/").then((data) => {
-    // Check of er een query in de URL staat (filter)
+    // Check of er een filter query in de URL staat, en of deze niet "all" is
     if (request.query.filter && request.query.filter != "all") {
       // Filter de data op de meegegeven query
       data.data = data.data.filter(
@@ -34,7 +34,9 @@ app.get("/", function (request, response) {
       );
     };
 
+    // Check of er een search query in de URL staat, en of deze niet leeg is
     if (request.query.search && request.query.search != "") {
+      // Filter de data op de meegegeven query
       data.data = data.data.filter(
         (person) => person.name.toLowerCase().includes(request.query.search.toLowerCase()) || person.surname.toLowerCase().includes(request.query.search.toLowerCase())
       );
@@ -61,7 +63,10 @@ app.get("/", function (request, response) {
 
     console.log(data);
     // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
-    response.render("index", { persons: data.data, currentSquad: selectedSquad });
+    response.render("index", { persons: data.data, filters: {
+      selectedSquad: selectedSquad,
+      search: request.query.search
+    } });
   });
 });
 
