@@ -69,7 +69,7 @@ body:has(.profile) {
     overflow: hidden;
 }
 
-section, 
+main, 
 header {
     padding: 0.625rem;
     max-width: 1200px;
@@ -87,13 +87,13 @@ header {
   display: none;
 }
 
-section h3 {
+main h3 {
   margin-bottom: 1.25rem;
   padding-bottom: 0.625rem;
   position: relative;
 }
 
-section h3::after {
+main h3::after {
   content: "";
   position: absolute;
   bottom: 0;

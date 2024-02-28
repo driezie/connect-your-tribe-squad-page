@@ -40,7 +40,8 @@
     <button type="submit">Apply</button>
   </form>
 </header>
-<section>
+
+<main>
   <h3>
     <% if (filters.search) { %> Search results for "<%= filters.search %>" in
     <%= (filters.selectedSquad == null) ? "all Squads" : "Squad " +
@@ -70,7 +71,7 @@
     </div>
     <% }) %>
   </grid>
-</section>
+</main>
 
 <footer>
   <section>
