@@ -32,9 +32,15 @@ app.get("/", function (request, response) {
       data.data = data.data.filter(
         (person) => person.squad_id == request.query.filter
       );
-    }
+    };
 
-    // Geef mee aan de pagina welke squad geselcteerd is voor filteren
+    if (request.query.search && request.query.search != "") {
+      data.data = data.data.filter(
+        (person) => person.name.toLowerCase().includes(request.query.search.toLowerCase()) || person.surname.toLowerCase().includes(request.query.search.toLowerCase())
+      );
+    };
+
+    // Geef mee aan de pagina welke squad geselecteerd is voor filteren
     switch (request.query.filter) {
       case "":
         selectedSquad = null;
