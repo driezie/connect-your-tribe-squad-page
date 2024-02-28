@@ -1,45 +1,51 @@
 <%- include('./partials/head') %>
 <header>
-  <h1>
-    Meet the <%= (filters.selectedSquad == null) ? "Squads" : "Squad " + filters.selectedSquad %>
-  </h1>
-
-  <div class="filters">
-    <form class="selector">
-      <div>
-        <label for="sort">Sort by:</label>
-        <select name="sort" class="sort">
-          <option value="none" disabled>Sorteer</option>
-          <option value="all">All</option>
-          <option value="name">Name</option>
-          <option value="surname">Surname</option>
-        </select>
-      </div>
-      <div>
-        <label for="filter">Filter by:</label>
-        <select name="filter" class="filter">
-          <option value="none" disabled>Filter</option>
-          <option value="all">Alle squads</option>
-          <option value="3">Squad D</option>
-          <option value="4">Squad E</option>
-          <option value="5">Squad F</option>
-        </select>
-      </div>
-      <div>
-        <label for="search">Search:</label>
-        <input type="text" name="search" placeholder="Search for a student" class="search"/>
-      </div>
-      <button type="submit">Apply</button>
-    </form>
+  <div class="title">
+    <h1>
+      Meet the <%= (filters.selectedSquad == null) ? "Squads" : "Squad " +
+      filters.selectedSquad %>
+    </h1>
+    <button>Filters</button>
   </div>
+
+  <form class="filters">
+    <div>
+      <label for="sort">Sort by:</label>
+      <select name="sort" class="sort">
+        <option value="none" disabled>Sorteer</option>
+        <option value="all">All</option>
+        <option value="name">Name</option>
+        <option value="surname">Surname</option>
+      </select>
+    </div>
+    <div>
+      <label for="filter">Filter by:</label>
+      <select name="filter" class="filter">
+        <option value="none" disabled>Filter</option>
+        <option value="all">Alle squads</option>
+        <option value="3">Squad D</option>
+        <option value="4">Squad E</option>
+        <option value="5">Squad F</option>
+      </select>
+    </div>
+    <div>
+      <label for="search">Search:</label>
+      <input
+        type="text"
+        name="search"
+        placeholder="Search for a student"
+        class="search"
+      />
+    </div>
+    <button type="submit">Apply</button>
+  </form>
 </header>
 <section>
   <h3>
-    <% if (filters.search) { %>
-      Search results for "<%= filters.search %>" in <%= (filters.selectedSquad == null) ? "all Squads" : "Squad " + filters.selectedSquad %>
-    <% } else { %>
-      <%= (filters.selectedSquad == null) ? "All squads" : "Squad " + filters.selectedSquad %>
-    <% } %>
+    <% if (filters.search) { %> Search results for "<%= filters.search %>" in
+    <%= (filters.selectedSquad == null) ? "all Squads" : "Squad " +
+    filters.selectedSquad %> <% } else { %> <%= (filters.selectedSquad == null)
+    ? "All squads" : "Squad " + filters.selectedSquad %> <% } %>
   </h3>
   <grid class="default">
     <% persons.forEach(person => { %>
