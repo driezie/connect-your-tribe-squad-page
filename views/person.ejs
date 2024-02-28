@@ -6,16 +6,19 @@
 </section>
 <section>
 
-  <grid>
-        <div class="item students">
+  <grid class="profile-info">
+        <div class="item profile">
 
-          <a class="name" href="/Person/<%= data.id %>">
+            <h2 class="name" href="/Person/<%= data.id %>">
+                
+                <%= data.name %> <%= data.prefix %> <%= data.surname %>
+            </h2>          
             
-            <%= data.name %> <%= data.prefix %> <%= data.surname %></a>          <ul class="roles">
-            <% data.role.forEach(role => { %>
-              <li><%= role %></li>
-            <% }) %>
-          </ul>
+            <ul class="roles">
+                <% data.role.forEach(role => { %>
+                <li><%= role %></li>
+                <% }) %>
+            </ul>
           <article class="bio">
             <p>
               <%= data.bio %></p>
@@ -23,6 +26,25 @@
           <a class="websiteLink" href="">
             <img src="/img/website.png" alt="website">              
           </a>
+        </div>
+
+
+        <div class="messages">
+            <h3>Messages on your profile</h3>
+            <p class="count">You recieved 
+                <% if (data.messages) { %>
+                <%= data.messages %> messages
+                <% } else { %>
+                0 messages
+                <% }
+                %>
+            </p>
+
+            <ul>
+                <li>Message 1</li>
+                <li>Message 2</li>
+                <li>Message 3</li>
+            </ul>
         </div>
 
         

@@ -56,6 +56,10 @@ h3 {
     margin-bottom: 1rem;
 }
 
+ul {
+    list-style: none;
+}
+
 section {
     padding: 10px;
     max-width: 1200px;
@@ -77,6 +81,7 @@ section h3::after {
     height: 3px;
     background: var(--color-black);
 }
+
 
 .filters {
     width: 100%;
@@ -115,12 +120,38 @@ form button{
     font-size: 1rem;
 }
 
-grid {
+grid.default {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 20px;
     padding-bottom: 40px;
 }
+
+grid.profile-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 20px;
+    padding-bottom: 40px;
+
+    .profile {
+        /* background-color: red; */
+    }
+
+    .messages {
+        /* background-color: blue; */
+
+        .count {
+            padding: 5px 10px;
+            background: var(--color-lightgray);
+            margin-bottom: 20px;
+        }
+    }
+}
+
+
+
+
+
 
 grid .item {
     background: var(--color-darkgray);
@@ -133,15 +164,27 @@ grid .item {
     position: relative;
 
 
-    a.name {
+    .name {
+        padding-bottom: 10px;
+        position: relative;
         text-decoration: none;
         color: white;
         font-size: 1.2rem;
         font-weight: 600;
     }
 
+    .name::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 3px;
+        background: var(--color-lightgray);
+    }
+
     ul.roles {
-        padding-top: 10px;
+        padding-top: 20px;
         list-style: none;
         display: flex;
         flex-wrap: wrap;
