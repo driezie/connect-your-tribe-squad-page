@@ -21,14 +21,25 @@ app.set('views', './views')
 app.use(express.static('public'))
 
 // Maak een GET route voor de index
-app.get('/', function (request, response) {
-  // Haal alle personen uit de FDND API op
-  fetchJson(apiUrl + '/person/').then((data) => {
-    console.log(data)
-    // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
-    response.render('index', data)
-  })
-})
+app.get("/", function (request, response) {
+  let sortBy = "";
+  if (request.param("sort")) {
+    sortBy = `&sort=${request.param("sort")}`;
+  }
+  // Haal alle personen uit de WHOIS API op
+  fetchJson(apiUrl + '/person/?filter={"squad_id":5}' + sortBy).then(
+    (apiData) => {
+      // apiData bevat gegevens van alle personen uit alle squads
+      // Je zou dat hier kunnen filteren, sorteren, of zelfs aanpassen, voordat je het doorgeeft aan de view
+
+      // Render index.ejs uit de views map en geef de opgehaalde data mee als variabele, genaamd persons
+      response.render("index", {
+        persons: apiData.data,
+        squads: squadData.data,
+      });
+    }
+  );
+});
 
 
 // Maak een POST route voor de index
