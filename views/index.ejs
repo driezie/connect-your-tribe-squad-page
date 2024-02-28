@@ -1,73 +1,75 @@
 <%- include('./partials/head') %>
-<section>
+<header>
   <h1>
     Meet the <%= (currentSquad == null) ? "Squads" : "Squad " + currentSquad %>
   </h1>
+
   <div class="filters">
     <form class="selector">
-      <label for="sort">Sort by:</label>
-      <select name="sort" class="sort">
-        <option value="none" disabled>Sorteer</option>
-        <option value="all">All</option>
-        <option value="name">Name</option>
-        <option value="surname">Surname</option>
-      </select>
-    </form>
-
-    <form class="selector">
-      <label for="filter">Filter by:</label>
-      <select name="filter" class="filter">
-        <option value="none" disabled>Filter</option>
-        <option value="all" >Alle squads</option>
-        <option value="3" >Squad D</option>
-        <option value="4" >Squad E</option>
-        <option value="5" >Squad F</option>
-      </select>
-      <button type="submit">Filter</button>
+      <div>
+        <label for="sort">Sort by:</label>
+        <select name="sort" class="sort">
+          <option value="none" disabled>Sorteer</option>
+          <option value="all">All</option>
+          <option value="name">Name</option>
+          <option value="surname">Surname</option>
+        </select>
+      </div>
+      <div>
+        <label for="filter">Filter by:</label>
+        <select name="filter" class="filter">
+          <option value="none" disabled>Filter</option>
+          <option value="all">Alle squads</option>
+          <option value="3">Squad D</option>
+          <option value="4">Squad E</option>
+          <option value="5">Squad F</option>
+        </select>
+      </div>
+      <div>
+        <label for="search">Search:</label>
+        <input type="text" name="search" placeholder="Search for a student" class="search"/>
+      </div>
+      <button type="submit">Apply</button>
     </form>
   </div>
-</section>
+</header>
 <section>
   <h3>
     <%= (currentSquad == null) ? "All squads" : "Squad " + currentSquad %>
   </h3>
   <grid class="default">
     <% persons.forEach(person => { %>
-        <div class="item students">
-
-          <a class="name" href="/Person/<%= person.id %>">
-            
-            <%= person.name %> <%= person.prefix %> <%= person.surname %></a>          <ul class="roles">
-            <% person.role.forEach(role => { %>
-              <li><%= role %></li>
-            <% }) %>
-          </ul>
-          <article class="bio">
-            <p>
-              <% if (person.bio) {
-                  %><%= person.bio %><%
-                } else {
-                  %>Er is geen beschrijving beschikbaar van <%= person.name %>.<%
-                }
-                %></p>
-          </article>
-          <a class="websiteLink" href="">
-            <img src="/img/website.png" alt="website">              
-          </a>
-        </div>
+    <div class="item students">
+      <a class="name" href="/Person/<%= person.id %>">
+        <%= person.name %> <%= person.prefix %> <%= person.surname %></a
+      >
+      <ul class="roles">
+        <% person.role.forEach(role => { %>
+        <li><%= role %></li>
+        <% }) %>
+      </ul>
+      <article class="bio">
+        <p>
+          <% if (person.bio) { %><%= person.bio %><% } else { %>Er is geen
+          beschrijving beschikbaar van <%= person.name %>.<% } %>
+        </p>
+      </article>
+      <a class="websiteLink" href="">
+        <img src="/img/website.png" alt="website" />
+      </a>
+    </div>
     <% }) %>
   </grid>
 </section>
 
 <footer>
   <section>
-    <form action="/" method="POST" >
+    <form action="/" method="POST">
       <h2>Bewerk je eigen foto</h2>
-      <input type="file" name="file" id="file" accept="image/*">
-      <input type="submit" value="Verstuur">
+      <input type="file" name="file" id="file" accept="image/*" />
+      <input type="submit" value="Verstuur" />
     </form>
   </section>
-  
 </footer>
 
 <script src="/js/main.js" defer></script>
