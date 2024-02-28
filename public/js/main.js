@@ -2,7 +2,9 @@ const textEl = document.querySelector('article p');
 const textContent = textEl.innerHTML;
 const textArray = textContent.split(/(\s+)/); // Use regex to split while preserving spaces
 const query = new URLSearchParams(window.location.search);
+const sortEl = document.querySelector('select.sort');
 const filterEl = document.querySelector('select.filter');
+const searchEl = document.querySelector('input.search');
 
 textArray.forEach((word, index) => {
     if (word.includes('#')) {
@@ -10,6 +12,23 @@ textArray.forEach((word, index) => {
         textArray[index] = `<a href="https://twitter.com/search?q=%23${word2}&src=typed_query" class="highlight">${word}</a>`;
     }
 });
+
+if (query.get('sort')) {
+  switch (query.get('sort')) {
+    case "":
+      sortEl.selectedIndex = 1
+      break;
+    case "all":
+      sortEl.selectedIndex = 1
+      break;
+    case "name":
+      sortEl.selectedIndex = 2
+      break;
+    case "surname":
+      sortEl.selectedIndex = 3
+      break;
+  }
+};
 
 if (query.get('filter')) {
     switch (query.get('filter')) {
@@ -29,6 +48,10 @@ if (query.get('filter')) {
         filterEl.selectedIndex = 4
         break;
     }
+};
+
+if (query.get('search') && query.get('search') != "") {
+  searchEl.value = query.get('search');
 };
 
 textEl.innerHTML = textArray.join(''); // Join without spaces
