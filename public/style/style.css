@@ -47,7 +47,7 @@ h1 {
 h2 {
     font-size: 2.5rem;
     line-height: 1.2;
-    margin-bottom: 1rem;
+    /* margin-bottom: 1rem; */
 }
 
 h3 {
@@ -58,6 +58,10 @@ h3 {
 
 ul {
     list-style: none;
+}
+
+body:has(.profile) {
+    overflow: hidden;
 }
 
 section {
@@ -129,22 +133,90 @@ grid.default {
 
 grid.profile-info {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
     grid-gap: 20px;
     padding-bottom: 40px;
 
     .profile {
         /* background-color: red; */
+        grid-area: 1 / 1 / 2 / 2;
     }
 
     .messages {
-        /* background-color: blue; */
+        grid-area: 1 / 2 / 3 / 3;
 
+        .messages-overlay {
+            /* add scroll */
+            overflow-y: scroll;
+            max-height: 550px;
+            position: relative;
+        }
+
+        
+        /* take 2nd and 4th vertical */
         .count {
             padding: 5px 10px;
             background: var(--color-lightgray);
             margin-bottom: 20px;
         }
+
+        ul {
+            position: relative;
+
+            li {
+                text-wrap: balance;
+                min-width: 50%;
+                border-radius: 8px;
+                width: fit-content;
+                padding: 5px 10px;
+                margin-bottom: 20px;
+                /* border-bottom: 1px solid var(--color-lightgray); */
+                background: white;
+                box-shadow: 1px 1px 5px rgba(0,0,0,0.1);
+                display: flex;
+                flex-direction: column;
+
+
+                .name {
+                    padding-bottom: 10px;
+                    position: relative;
+                    font-family: 'Inter', sans-serif;
+                    font-weight: 500;
+
+                    a {
+                        text-decoration: none;
+                        color: var(--color-black);
+                    
+                    }
+                }
+            
+                .name::after {
+                    content: '';
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: 50px;
+                    height: 3px;
+                    background: var(--color-lightgray);
+                }
+
+                .content {
+                    margin-top: 10px;
+                    font-family: 'Inter', sans-serif;
+                }
+
+                .date {
+                    font-family: 'Inter', sans-serif;
+                    font-size: 0.8rem;
+                    color: var(--color-lightgray);
+                }
+            }
+        }
+    }
+
+    form {
+        grid-area: 2 / 1 / 3 / 2;
     }
 }
 
@@ -198,6 +270,7 @@ grid .item {
             background: var(--color-lightgray);
             border-radius: 5px;
             text-align: center;
+            text-transform: capitalize;
         }
     }
 
@@ -233,7 +306,7 @@ grid .item.students:nth-child(3n+2) {
     position: absolute;
     bottom: 0;
     right: 0;
-    display: flex;
+    display: none;
     align-items: center;
     border-width: 3px;
     border-style: solid;
@@ -283,3 +356,19 @@ footer {
     }
 }
 
+form .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+form .form-group label {
+    margin-bottom: 5px;
+}
+
+form .form-group textarea {
+    padding: 10px;
+    border: 1px solid var(--color-lightgray);
+    border-radius: 5px;
+    font-size: 1rem;
+}
