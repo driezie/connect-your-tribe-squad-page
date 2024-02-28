@@ -4,20 +4,19 @@
     Meet the <%= (currentSquad == null) ? "Squads" : "Squad " + currentSquad %>
   </h1>
   <div class="filters">
-    <div class="selector">
+    <form class="selector">
       <label for="sort">Sort by:</label>
-      <select name="sort">
+      <select name="sort" class="sort">
         <option value="none" disabled>Sorteer</option>
         <option value="all">All</option>
         <option value="name">Name</option>
         <option value="surname">Surname</option>
       </select>
-    </div>
-    
+    </form>
 
     <form class="selector">
       <label for="filter">Filter by:</label>
-      <select name="filter">
+      <select name="filter" class="filter">
         <option value="none" disabled>Filter</option>
         <option value="all" >Alle squads</option>
         <option value="3" >Squad D</option>
@@ -71,7 +70,6 @@
   
 </footer>
 
-<script src="/script.js"></script>
-<script src="/filter.js"></script>
+<script src="/js/main.js" defer></script>
 
 <%- include('./partials/foot') %>
