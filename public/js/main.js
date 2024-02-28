@@ -57,6 +57,7 @@ if (query.get("filter")) {
 
 if (query.get("search") && query.get("search") != "") {
   searchEl.value = query.get("search");
+  filtersEl.classList.toggle("opened");
 }
 
 filtersBtn.addEventListener("click", (e) => {
