@@ -1,1 +1,38 @@
-werguiuweig
+<%- include('./partials/head') %>
+<section>
+  <h1>Meet <%= data.name %></h1>
+
+  <a href="/">Return to Squads</a>
+</section>
+<section>
+
+  <grid>
+        <div class="item students">
+
+          <a class="name" href="/Person/<%= data.id %>">
+            
+            <%= data.name %> <%= data.prefix %> <%= data.surname %></a>          <ul class="roles">
+            <% data.role.forEach(role => { %>
+              <li><%= role %></li>
+            <% }) %>
+          </ul>
+          <article class="bio">
+            <p>
+              <%= data.bio %></p>
+          </article>
+          <a class="websiteLink" href="">
+            <img src="/img/website.png" alt="website">              
+          </a>
+        </div>
+
+        
+
+  </grid>
+
+</section>
+
+
+<script src="/script.js"></script>
+<script src="/filter.js"></script>
+
+<%- include('./partials/foot') %>
