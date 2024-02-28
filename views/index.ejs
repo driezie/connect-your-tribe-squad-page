@@ -53,16 +53,17 @@
       <% } %>
     <% }) %>
   </grid>
-  
-    
-    
+
   <h3>Students</h3>
 
   <grid>
     <% data.forEach(person => { %>
       <% if (person.role.includes('member')) { %>
         <div class="item students">
-          <a class="name" href="https://github.com/<%= person.github_handle %>"><%= person.name %> <%= person.prefix %> <%= person.surname %></a>          <ul class="roles">
+
+          <a class="name" href="/Person/<%= person.id %>">
+            
+            <%= person.name %> <%= person.prefix %> <%= person.surname %></a>          <ul class="roles">
             <% person.role.forEach(role => { %>
               <li><%= role %></li>
             <% }) %>
