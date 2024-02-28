@@ -11,3 +11,15 @@ textArray.forEach((word, index) => {
 
 text.innerHTML = textArray.join(''); // Join without spaces
 
+// Function to save the selected option in localStorage
+function saveSelectedOption(selectElement) {
+    localStorage.setItem("selectedOption", selectElement.selectedIndex);
+  }
+  
+  // Function to set the selected option when the page loads
+  window.onload = function () {
+    var savedIndex = localStorage.getItem("selectedOption");
+    if (savedIndex !== null) {
+      document.querySelector("select").selectedIndex = savedIndex;
+    }
+  };
