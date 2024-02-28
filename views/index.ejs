@@ -29,36 +29,12 @@
   
 </section>
 <section>
-  <h3>Teachers</h3>
-  <grid>
-    <% data.forEach(person => { %>
-      <% if (person.role.includes('co_teacher') || person.role.includes('squad_leader') || person.role.includes('tribe_leader')) { %>
-        <div class="item teacher">
-          <a class="name" href="https://github.com/<%= person.github_handle %>"><%= person.name %> <%= person.prefix %> <%= person.surname %></a>
-          <ul class="roles">
-            <% person.role.forEach(role => { %>
-              <li><%= role %></li>
-            <% }) %>
-          </ul>
-          <article class="bio">
-            <p>
-              <% if (person.bio) {
-                  %><%= person.bio %><%
-                } else {
-                  %>Er is geen beschrijving beschikbaar van <%= person.name %>.<%
-                }
-                %></p>
-          </article>
-        </div>
-      <% } %>
-    <% }) %>
-  </grid>
 
-  <h3>Students</h3>
+
+  <h3>Squad name hier</h3>
 
   <grid>
     <% data.forEach(person => { %>
-      <% if (person.role.includes('member')) { %>
         <div class="item students">
 
           <a class="name" href="/Person/<%= person.id %>">
@@ -84,7 +60,6 @@
 
         
 
-      <% } %>
     <% }) %>
   </grid>
   
