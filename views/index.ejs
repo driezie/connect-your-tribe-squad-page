@@ -1,65 +1,39 @@
 <%- include('./partials/head') %>
 <section>
-  <h1>Meet the squad 1F</h1>
+  <h1>
+    Meet the <%= (currentSquad == null) ? "Squads" : "Squad " + currentSquad %>
+  </h1>
   <div class="filters">
     <div class="selector">
-      <p>Sort by:</p>
-      <select class="filter" onchange="saveSelectedOption(this); location = this.value;">
-        <option value="/">Standaard</option>
-        <option value="/?sort=name">Naam A-Z</option>
-        <option value="/?sort=-name">Naam Z-A</option>
-        <option value="/?sort=id">ID laag-hoog</option>
-        <option value="/?sort=-id">ID hoog-laag</option>
+      <label for="sort">Sort by:</label>
+      <select name="sort">
+        <option value="none" disabled>Sorteer</option>
+        <option value="all">All</option>
+        <option value="name">Name</option>
+        <option value="surname">Surname</option>
       </select>
     </div>
     
 
-    <div class="selector">
-      <p>Filter by:</p>
-      <select class="sort">
+    <form class="selector">
+      <label for="filter">Filter by:</label>
+      <select name="filter">
         <option value="none" disabled>Filter</option>
-        <option value="/" >Alle squads</option>
-        <option value="/" >Squad D</option>
-        <option value="/" >Squad E</option>
-        <option value="/" >Squad F</option>
+        <option value="all" >Alle squads</option>
+        <option value="3" >Squad D</option>
+        <option value="4" >Squad E</option>
+        <option value="5" >Squad F</option>
       </select>
-    </div>
-    
+      <button type="submit">Filter</button>
+    </form>
   </div>
-
-  
 </section>
 <section>
-  <h3>Teachers</h3>
-  <grid>
+  <h3>
+    <%= (currentSquad == null) ? "All squads" : "Squad " + currentSquad %>
+  </h3>
+  <grid class="default">
     <% persons.forEach(person => { %>
-      <% if (person.role.includes('co_teacher') || person.role.includes('squad_leader') || person.role.includes('tribe_leader')) { %>
-        <div class="item teacher">
-          <a class="name" href="https://github.com/<%= person.github_handle %>"><%= person.name %> <%= person.prefix %> <%= person.surname %></a>
-          <ul class="roles">
-            <% person.role.forEach(role => { %>
-              <li><%= role %></li>
-            <% }) %>
-          </ul>
-          <article class="bio">
-            <p>
-              <% if (person.bio) {
-                  %><%= person.bio %><%
-                } else {
-                  %>Er is geen beschrijving beschikbaar van <%= person.name %>.<%
-                }
-                %></p>
-          </article>
-        </div>
-      <% } %>
-    <% }) %>
-  </grid>
-
-  <h3>Students</h3>
-
-  <grid>
-    <% persons.forEach(person => { %>
-      <% if (person.role.includes('member')) { %>
         <div class="item students">
 
           <a class="name" href="/Person/<%= person.id %>">
@@ -82,17 +56,8 @@
             <img src="/img/website.png" alt="website">              
           </a>
         </div>
-
-        
-
-      <% } %>
     <% }) %>
   </grid>
-  
-
-
-    
-    
 </section>
 
 <footer>
