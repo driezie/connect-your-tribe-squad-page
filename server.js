@@ -1,16 +1,12 @@
-// Importeer het npm pakket express uit de node_modules map
 import express from "express";
-// Importeer de zelfgemaakte functie fetchJson uit de ./helpers map
 import fetchJson from "./helpers/fetch-json.js";
+import bodyParser from 'body-parser'; // Importing bodyParser using ES module syntax
 
-// Stel het basis endpoint in
 const apiUrl = "https://fdnd.directus.app/items";
-
-// Haal alle squads uit de WHOIS API op
-const squadData = await fetchJson(apiUrl + '/person/?filter={"squad_id"}:5');
-
-// Maak een nieuwe express app aan
 const app = express();
+
+// Using bodyParser middleware to parse urlencoded request bodies
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Stel ejs in als template engine
 app.set("view engine", "ejs");
@@ -19,6 +15,8 @@ app.set("views", "./views");
 
 // Gebruik de map 'public' voor statische resources
 app.use(express.static("public"));
+
+const messages = [];
 
 // Maak een GET route voor de index
 app.get("/", function (request, response) {
@@ -70,20 +68,77 @@ app.get("/", function (request, response) {
   });
 });
 
-// Maak een POST route voor de index
-app.post("/", function (request, response) {
-  // Er is nog geen afhandeling van POST, redirect naar GET op /
-  response.redirect(303, "/");
-});
+// Maak een GET route voor een detailpagina met een request parameter id
+app.get('/person/:id', function (request, response) {
+  // Gebruik de request parameter id en haal de juiste persoon uit de WHOIS API op
+  fetchJson(apiUrl + '/person/' + request.params.id).then((apiData) => {
 
-// Maak een GET route voor person met een request parameter id
-app.get("/person/:id", function (request, response) {
-  // Gebruik de request parameter id en haal de juiste persoon uit de FDND API op
-  fetchJson(apiUrl + "/person/" + request.params.id).then((data) => {
-    //fdnd.directus.app/items/person/46
-    // Render index.ejs uit de views map en geef uit FDND API opgehaalde data mee
-    https: response.render("person", data);
-    console.log(data);
+    try {
+      // PARSE
+      apiData.data.custom = JSON.parse(apiData.data.custom)
+    } catch (error) {
+      apiResponse.data.custom = {}
+    }
+
+    // Render person.ejs uit de views map en geef uit FDND API opgehaalde data mee
+    response.render('person', {
+      person: apiData.data,
+      messages: messages})
+  })
+})
+
+
+app.post('/person/:id', function (request, response) {
+  console.log("RECEIVED POST REQUEST");
+  console.log(request.body, request.params.id);
+
+  // Haal de persoon op uit de WHOIS API
+  fetchJson(apiUrl + '/person/' + request.params.id)
+  .then((apiResponse) => {
+    console.log(apiResponse);
+
+    try {
+      // PARSE
+      apiResponse.data.custom = JSON.parse(apiResponse.data.custom);
+    } catch (error) {
+      apiResponse.data.custom = {};
+    }
+
+    console.log("This is my response:", request.body);
+
+    // Checkt of er een bericht is ingevuld
+    if (request.body.bericht && request.body.bericht.trim() !== '') {
+      // Checkt of de custom data al een messages array heeft
+      if (!apiResponse.data.custom.messages) {
+        apiResponse.data.custom.messages = []; // Als die niet bestaat maakt hij een nieuwe array aan
+      }
+      apiResponse.data.custom.messages.push(request.body.bericht);
+    }
+
+    // Updates de custom data van de persoon in de WHOIS API
+    fetch(apiUrl + '/person/' + request.params.id, {
+      method: 'PATCH',
+      body: JSON.stringify({
+        custom: apiResponse.data.custom
+      }),
+      headers: {
+        'Content-type': 'application/json; charset=UTF-8'
+      }
+    })
+    .then((patchResponse) => {
+      // Stuurt de gebruiker terug naar de detailpagina van de persoon
+      response.redirect(303, '/person/' + request.params.id);
+    })
+    .catch((error) => {
+      // Als er een fout optreedt, log deze dan in de console en geef een foutmelding aan de gebruiker
+      console.error("Error updating person data:", error);
+      response.status(500).send("Error updating person data");
+    });
+  })
+  .catch((error) => {
+    // Als er een fout optreedt, log deze dan in de console en geef een foutmelding aan de gebruiker
+    console.error("Error fetching person data:", error);
+    response.status(500).send("Error fetching person data");
   });
 });
 

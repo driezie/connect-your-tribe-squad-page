@@ -1,121 +1,99 @@
 <%- include('./partials/head') %>
-<section>
-  <h1>Meet <%= data.name %></h1>
 
-  <a href="/">Return to Squads</a>
-</section>
-<section>
+<main>
+    <section>
+        <h1>Meet <%= person.name %></h1>
+      
+        <a href="/">Return to Squads</a>
+      </section>
 
   <grid class="profile-info">
         <div class="item profile">
 
-            <h2 class="name" href="/Person/<%= data.id %>">
-                
-                <%= data.name %> <%= data.prefix %> <%= data.surname %>
+            <h2 class="name" href="/Person/<%= person.id %>">
+                <!-- 
+                    The person's full name is displayed
+                 -->
+                <%= person.id %>. <%= person.name %> <%= person.prefix %> <%= person.surname %>
             </h2>          
             
             <ul class="roles">
-                <% data.role.forEach(role => { %>
+                <!-- 
+                    The person's role is displayed using a forEach loop
+                    The roles are displayed using the person.role object
+
+                    Most commen roles for students are:
+                    - Student
+
+                    Most commen roles for teachers are:
+                    - Co_teacher
+                    - Squad_leader
+                    - Tribe_leader
+                 -->
+                <% person.role.forEach(role => { %>
                 <li><%= role %></li>
                 <% }) %>
             </ul>
           <article class="bio">
             <p>
-              <%= data.bio %></p>
+              <%= person.bio %></p>
           </article>
-          <a class="websiteLink" href="">
-            <img src="/img/website.png" alt="website">              
-          </a>
         </div>
-
 
         <div class="messages">
             <h3>Messages on your profile</h3>
             <div class="messages-overlay">
                 <p class="count">You received 
-                    <% if (data.messages) { %>
-                    <%= data.messages %> messages
+                    <!-- 
+                        Shows the number of messages the person has received
+                     -->
+                    <% if (person.custom.messages){ %>
+                        <%= person.custom.messages.length %> message<%= person.custom.messages.length > 1 ? 's' : '' %>
                     <% } else { %>
-                    0 messages
-                    <% }
-                    %>
+                        0 messages, start by sending a message
+                    <% } %>
                 </p>
     
                 <ul>
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
-                    <li>
-                        <h4 class="name">Message from <a href="">Sender 1</a></h4>
-                        <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.</p>
-                        <p class="date">Date: 2021-01-01</p>
-                    </li>
-    
+
+                    <% if (person.custom.messages){ %>
+                        <% let count = 1 %>
+                        <% person.custom.messages.forEach(message => { %>
+                            <!-- 
+                                The messages are displayed in a list, the messages are displayed using a forEach loop
+                                The messages are displayed using the person.custom.messages object
+                                Each message will have a count, the count is used to display the number of messages
+                             -->
+                            <li>
+                                <h4 class="name">Message from <a href="">Sender <%= count++ %></a>
+                                </h4>
+                                <p class="content"><%= message || 'No message defined' %></p>
+                        <% }) %>
+                    <% } %>
                 </ul>
-            </div>
-            
+            </div>  
         </div>
 
-
-        <form action="" class="form">
-            <h3>Send a message to <%= data.name %></h3>
+        <form method="POST" class="form" action="/person/<%= person.id %>">
+            <!-- 
+                The form is used to send a message to the person, the message is send to the person using the person.id
+                The message is send using the POST method, the message is send to the person using the action attribute
+             -->
+            <h3>Send a message to <%= person.name %></h3>
             <div class="form-group">
                 <label for="message">Message</label>
-                <textarea name="message" id="message" cols="30" rows="5"></textarea>
+                <textarea required name="bericht" id="bericht" cols="30" rows="5"></textarea>
             </div>
-            
-            <button type="submit">Send</button>
+            <button type="submit" value="verstuur" name="actie">Send</button>
         </form>
+
+
+    </form>
         
 
   </grid>
 
-</section>
+</main>
 
 
 <script src="/script.js"></script>

@@ -65,10 +65,6 @@ ul {
   list-style: none;
 }
 
-body:has(.profile) {
-    overflow: hidden;
-}
-
 main, 
 header {
     padding: 0.625rem;
@@ -356,11 +352,6 @@ grid .item.students:nth-child(3n + 2) {
 
   height: 6.25rem;
   width: 6.25rem;
-}
-
-footer {
-  border-top: 1px solid var(--color-lightgray);
-  padding: 1.25rem;
 }
 
 /* media grid */
